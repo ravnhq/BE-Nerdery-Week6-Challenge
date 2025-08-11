@@ -1,13 +1,6 @@
-# My Store
+# My Store (GraphQL)
 
-Express + GraphQL + Prisma (Postgres) — TypeScript example
-
-## Overview
-
-Example project exposing a GraphQL endpoint to get a product by id.  
-Uses Prisma as ORM with PostgreSQL.  
-Products belong to clients; API keys belong to clients.  
-GraphQL queries require an API key in the request header, but the API key retrieval endpoint is public.
+Express + GraphQL + Prisma (Postgres)
 
 ## Requirements
 
@@ -75,3 +68,7 @@ npm run prisma:seed
 ```bash
 npm run dev
 ```
+
+### Additional Notes: 
+
+GraphQL queries require an API key in the request header, but the API key retrieval endpoint is public.
