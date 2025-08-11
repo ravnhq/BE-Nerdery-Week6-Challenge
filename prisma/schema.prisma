@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Client {
+  id        String    @id @default(uuid()) @map("id")
+  name      String    @map("name")
+  email     String?   @unique @map("email")
+  products  Product[]
+  apiKeys   ApiKey[]
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  @@map("clients")
+}
+
+model Product {
+  id          String   @id @default(uuid()) @map("id")
+  clientId    String   @map("client_id")
+  client      Client   @relation(fields: [clientId], references: [id])
+  name        String   @map("name")
+  description String?  @map("description")
+  stock       Int      @default(0) @map("stock")
+  price       Float    @map("price")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  @@unique([clientId, name])
+  @@map("products")
+}
+
+model ApiKey {
+  id         String   @id @default(uuid()) @map("id")
+  clientId   String   @map("client_id")
+  client     Client   @relation(fields: [clientId], references: [id])
+  key        String   @unique @map("key")
+  expiration DateTime @map("expiration")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@map("api_keys")
+}
